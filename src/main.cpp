@@ -2,16 +2,26 @@
 
 #include "flags.h"
 
+void discardLineEnding() {
+  if (!Serial.available()) {
+    return;
+  }
+  char c = Serial.peek();
+  if (c == '\r' || c == '\n') {
+    Serial.readStringUntil('\n');
+  }
+}
+
 void setup() {
   Serial.begin(9600);
-  Serial.setTimeout(5000);
+  Serial.setTimeout(15000);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void flag1() { Serial.println(FLAG1); }
 
 void flag2() {
-  auto msg = Serial.readString();
+  auto msg = Serial.readStringUntil('\n');
   msg.trim();
   if (msg == "hello, world") {
     Serial.println(FLAG2);
@@ -19,12 +29,12 @@ void flag2() {
 }
 
 bool server_handshake() {
-  auto c = Serial.readString();
+  auto c = Serial.readStringUntil('\n');
   c.trim();
   if (c == "S") {
     Serial.println("A");
   }
-  c = Serial.readString();
+  c = Serial.readStringUntil('\n');
   c.trim();
   if (c == "SA") {
     return true;
@@ -34,7 +44,7 @@ bool server_handshake() {
 
 bool client_handshake() {
   Serial.println("S");
-  auto c = Serial.readString();
+  auto c = Serial.readStringUntil('\n');
   c.trim();
   if (c == "A") {
     Serial.println("SA");
@@ -61,18 +71,20 @@ void flag4() {
   }
   if (client_handshake()) {
     num = Serial.parseInt();
+    discardLineEnding();
   }
   if (server_handshake()) {
     if (num == BLINKS) {
       Serial.println(FLAG4);
     } else {
-      Serial.print("Incorrect.");
+      Serial.println("Incorrect.");
     }
   }
 }
 
 void loop() {
   int c = Serial.parseInt();
+  discardLineEnding();
 
   switch (c) {
     case 1:

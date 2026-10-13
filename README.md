@@ -90,7 +90,7 @@ Here the exchange is a tiny syn/ack-style dialog over UART—tokens `S`, `A`, an
 sequenceDiagram
   participant P as participant
   participant S as flag station
-  rect rgb(230, 240, 250)
+  rect rgba(70, 130, 180, 0.12)
     Note over P,S: server handshake
     P->>S: S
     S->>P: A
@@ -134,7 +134,7 @@ sequenceDiagram
   participant P as participant
   participant S as flag station
   P->>S: 3
-  rect rgb(230, 240, 250)
+  rect rgba(70, 130, 180, 0.12)
     Note over P,S: server handshake
     P->>S: S
     S->>P: A
@@ -152,21 +152,21 @@ sequenceDiagram
   participant P as participant
   participant S as flag station
   P->>S: 4
-  rect rgb(230, 240, 250)
+  rect rgba(70, 130, 180, 0.12)
     Note over P,S: server handshake
     P->>S: S
     S->>P: A
     P->>S: SA
   end
   Note over S: blink LED_BUILTIN BLINKS times
-  rect rgb(230, 240, 250)
+  rect rgba(70, 130, 180, 0.12)
     Note over P,S: client handshake
     S->>P: S
     P->>S: A
     S->>P: SA
   end
   P->>S: blink count as integer
-  rect rgb(230, 240, 250)
+  rect rgba(70, 130, 180, 0.12)
     Note over P,S: server handshake
     P->>S: S
     S->>P: A

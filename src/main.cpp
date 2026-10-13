@@ -18,6 +18,19 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
+void flag0() {
+  auto c = Serial.readStringUntil('\n');
+  c.trim();
+  if (c == "A") {
+    Serial.println("B");
+  }
+  c = Serial.readStringUntil('\n');
+  c.trim();
+  if (c == "C") {
+    Serial.println("DSU{2320_15_0n3}");
+  }
+}
+
 void flag1() { Serial.println(FLAG1); }
 
 void flag2() {
@@ -87,6 +100,9 @@ void loop() {
   discardLineEnding();
 
   switch (c) {
+    case 0:
+      flag0();
+      break;
     case 1:
       flag1();
       break;

@@ -44,7 +44,7 @@ flowchart LR
 
 ## Build and flash
 
-Flag strings are not committed. Put them in a project-root `.env` (gitignored). Placeholders in [`include/flags.h`](include/flags.h) are used if a key is missing.
+Flags 1–4 are not committed. Put them in a project-root `.env` (gitignored). Placeholders in [`include/flags.h`](include/flags.h) are used if a key is missing. Flag 0 is the exception: its string is written in [`src/main.cpp`](src/main.cpp) on purpose.
 
 ```env
 BLINKS=<count>
@@ -71,10 +71,11 @@ pio device monitor -b 9600
 
 ## Obtaining flags
 
-Send a flag number (`1`–`4`) followed by a newline, then complete that flag’s protocol. On success the station prints a `DSU{...}` line.
+Send a flag number (`0`–`4`) followed by a newline, then complete that flag’s protocol. On success the station prints a `DSU{...}` line.
 
 | Flag | Idea |
 |------|------|
+| 0 | In the source |
 | 1 | Request only |
 | 2 | Password |
 | 3 | Handshake |
@@ -99,6 +100,21 @@ sequenceDiagram
 ```
 
 When the station acts as server, the participant is the client (diagram above). When the station acts as client, roles reverse: station sends `S`, participant replies `A`, station sends `SA`.
+
+### Flag 0
+
+Send `0`, then `A`. The station replies `B`. Send `C` and it prints the flag. That string is the literal in `flag0()` in [`src/main.cpp`](src/main.cpp). It is part of the firmware source, not a value from `.env`.
+
+```mermaid
+sequenceDiagram
+  participant P as participant
+  participant S as flag station
+  P->>S: 0
+  P->>S: A
+  S->>P: B
+  P->>S: C
+  S->>P: FLAG0
+```
 
 ### Flag 1
 

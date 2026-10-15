@@ -104,7 +104,8 @@ When the station acts as server, the participant is the client (diagram above). 
 
 ### Flag 0
 
-Send `0`, then `A`. The station replies `B`. Send `C` and it prints the flag. That string is the literal in `flag0()` in [`src/main.cpp`](src/main.cpp). Flag 0 is a programmed
+Send `0`, then `A`. The station replies `B`. Send `C` and it prints the flag. That string is the literal in `flag0()` in [`src/main.cpp`](src/main.cpp). 
+Flag 0 is a hardcoded string meant to verify board functionality.  
 
 ```mermaid
 sequenceDiagram
